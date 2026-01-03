@@ -3,199 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salamat Business Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>CASA BONANA - Premium Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #F8F9FA;
-            --white: #FFFFFF;
-            --dark: #1A1A1A;
-            --gray: #666666;
-            --accent: #2D5A27; /* Modern green flair */
-            --radius: 24px;
-        }
+        :root { --bg: #F9FAFB; --white: #FFFFFF; --dark: #111827; --gray: #6B7280; --accent: #059669; --radius: 28px; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
+        .container { max-width: 450px; margin: 0 auto; padding: 20px; }
+        
+        /* MULTI-HOUSE LISTING STYLE */
+        .house-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 25px; border: 1px solid #F3F4F6; }
+        .house-img { width: 100%; height: 230px; object-fit: cover; background: #EEE; }
+        .badge { display: inline-block; background: #F3F4F6; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 600; margin-right: 5px; color: var(--gray); }
+        .pet-badge { background: #FFF1F2; color: #E11D48; } /* Pet Friendly Flair */
+        
+        /* CALENDAR STYLE (Mom's View) */
+        .calendar-box { background: var(--dark); color: white; border-radius: var(--radius); padding: 25px; margin-top: 20px; }
+        .grid-7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 15px; text-align: center; }
+        .day { font-size: 13px; opacity: 0.5; }
+        .day.active { opacity: 1; font-weight: 800; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 8px 0; }
+        .dot { color: #FF385C; font-size: 18px; line-height: 0; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 0;
-            color: var(--dark);
-        }
-
-        .container { max-width: 450px; margin: 0 auto; padding: 20px; padding-bottom: 100px; }
-
-        /* Card Styling to match the images */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-            transition: transform 0.2s;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .card-content { padding: 20px; }
-
-        .price-tag { font-weight: 800; font-size: 20px; color: var(--dark); }
-        .unit-label { font-size: 14px; color: var(--gray); font-weight: 400; }
-
-        /* Inputs & Buttons */
-        .btn {
-            background: var(--dark);
-            color: white;
-            border: none;
-            padding: 18px;
-            width: 100%;
-            border-radius: 18px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .btn-gcash { background: #007DFE; } /* GCash Blue */
-
-        input {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-
+        /* UI ELEMENTS */
+        .btn { background: var(--dark); color: white; border: none; padding: 18px; width: 100%; border-radius: 20px; font-size: 16px; font-weight: 700; cursor: pointer; }
         .hidden { display: none; }
-
-        /* Header Flair */
-        .header { padding: 20px 0; }
-        .header h1 { font-size: 24px; font-weight: 800; margin: 0; }
-        .header p { color: var(--gray); margin: 5px 0; }
-
-        /* Status Badge */
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: #E8F5E9;
-            color: #2E7D32;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
+        .nav-tab { display: flex; justify-content: space-around; background: white; padding: 15px; position: fixed; bottom: 0; width: 100%; max-width: 450px; border-top: 1px solid #EEE; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    
     <div id="login-screen">
-        <div class="header">
-            <h1>Salamat!</h1>
-            <p>Welcome to our family homes & laundry.</p>
+        <h1 style="margin-top:40px; font-size: 34px;">CASA<br>BONANA.</h1>
+        <p style="color: var(--gray);">Koronadal's Premium Stays</p>
+        <div class="house-card" style="margin-top:30px; padding: 20px;">
+            <input type="password" id="pin" placeholder="Enter PIN" style="width:100%; padding:15px; border-radius:15px; border:1px solid #ddd; margin-bottom:10px;">
+            <button class="btn" onclick="handleLogin()">Team Access</button>
+            <button class="btn" style="background:none; color:var(--dark); margin-top:10px;" onclick="showScreen('guest')">Explore as Guest</button>
         </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/600x400" class="card-img" alt="Luxury House">
-            <div class="card-content">
-                <button class="btn" onclick="showScreen('guest')">Explore as Guest</button>
-            </div>
-        </div>
-        <p style="text-align: center; color: #999; font-size: 14px;">--- Team Access ---</p>
-        <input type="password" id="pin" placeholder="Enter PIN">
-        <button class="btn" style="background:#333;" onclick="handleLogin()">Team Portal</button>
     </div>
 
     <div id="guest-screen" class="hidden">
-        <div class="header">
-            <h1>Our Stays</h1>
-            <p>Available in Koronadal</p>
-        </div>
-        
-        <div class="card">
-            <img src="https://via.placeholder.com/600x400" class="card-img" alt="The Loft">
-            <div class="card-content">
-                <div class="badge">Pet Friendly</div>
-                <h3>The Modern Loft</h3>
-                <div class="price-tag">₱2,500 <span class="unit-label">/ night</span></div>
-                <button class="btn btn-gcash" onclick="alert('Proceeding to GCash...')">Book with GCash</button>
+        <h1>Find your stay</h1>
+        <div class="house-card">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6191da95b8" class="house-img">
+            <div style="padding: 20px;">
+                <span class="badge pet-badge">🐾 Pet Friendly</span>
+                <span class="badge">🏠 Entire Loft</span>
+                <h3 style="margin: 10px 0;">The Modern Garden Loft</h3>
+                <p style="font-weight: 800; font-size: 18px; margin: 0;">₱2,800 <span style="font-weight:400; color:var(--gray); font-size:14px;">/night</span></p>
+                <button class="btn" style="margin-top:15px;" onclick="alert('Proceeding to GCash...')">Book via GCash</button>
             </div>
         </div>
-
-        <div class="card" style="border-left: 5px solid var(--accent);">
-            <div class="card-content">
-                <h3>🧺 My Laundry</h3>
-                <p id="laundry-status" style="color:var(--accent); font-weight:600;">Status: Ready for Pickup!</p>
-                <button class="btn" style="background:none; color:var(--dark); border: 1px solid #ddd;" onclick="showScreen('login')">Back to Menu</button>
+        <div class="house-card">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750" class="house-img">
+            <div style="padding: 20px;">
+                <span class="badge">🚭 No Smoking</span>
+                <h3 style="margin: 10px 0;">Executive Pool Villa</h3>
+                <p style="font-weight: 800; font-size: 18px; margin: 0;">₱4,500 <span style="font-weight:400; color:var(--gray); font-size:14px;">/night</span></p>
+                <button class="btn" style="margin-top:15px;">Book via GCash</button>
             </div>
         </div>
-    </div>
-
-    <div id="staff-screen" class="hidden">
-        <div class="header">
-            <h1>Staff Desk</h1>
-            <p>New Laundry Intake</p>
-        </div>
-        <div class="card">
-            <div class="card-content">
-                <input type="text" placeholder="Customer Name">
-                <input type="number" id="w-input" placeholder="Weight in kg">
-                <div class="price-tag">Total: ₱<span id="price-total">0</span></div>
-                <button class="btn" onclick="alert('Order Saved!')">Finish & Print QR</button>
-            </div>
-        </div>
-        <button class="btn" style="background:#666;" onclick="showScreen('login')">Logout</button>
     </div>
 
     <div id="admin-screen" class="hidden">
-        <div class="header">
-            <h1>Command Center</h1>
-            <p>Overall Business Health</p>
-        </div>
-        <div class="card" style="background: var(--dark); color: white;">
-            <div class="card-content">
-                <p style="margin:0; opacity:0.7;">Today's Revenue</p>
-                <h1 style="font-size: 40px; margin: 10px 0;">₱15,240</h1>
-                <div class="badge" style="background: #2D5A27; color: white;">+12% vs Yesterday</div>
+        <h1>Command Center</h1>
+        
+        <div class="calendar-box">
+            <div style="display:flex; justify-content: space-between;">
+                <b>January 2026</b>
+                <span style="opacity:0.6; font-size: 12px;">Airbnb Synced</span>
             </div>
+            <div class="grid-7">
+                <div class="day">M</div><div class="day">T</div><div class="day">W</div><div class="day">T</div><div class="day">F</div><div class="day">S</div><div class="day">S</div>
+                <div class="day active">1</div><div class="day active">2</div><div class="day active">3</div>
+                <div class="day active">4<br><span class="dot">•</span></div><div class="day active">5</div><div class="day active">6</div><div class="day active">7</div>
+            </div>
+            <p style="font-size: 11px; margin-top:15px; opacity:0.8;">● Checkout: Loft #1 (11AM)</p>
         </div>
-        <h3>Staff Activity</h3>
-        <div class="card">
-            <div class="card-content">
-                <p><b>Maria</b> is cleaning <b>Loft #1</b></p>
-                <p><b>Jun</b> processed <b>5 Laundry Orders</b></p>
+
+        <h3 style="margin-top:25px;">Staff Assignments</h3>
+        <div class="house-card" style="padding:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <p><b>Maria</b><br><span style="font-size:12px; color:var(--gray);">Status: Cleaning Villa 2</span></p>
+                <button style="background:#EEE; border:none; padding:8px 12px; border-radius:10px;">Change</button>
             </div>
         </div>
         <button class="btn" style="background:#666;" onclick="showScreen('login')">Logout</button>
     </div>
-
 </div>
 
 <script>
-    function showScreen(screen) {
+    function showScreen(s) {
         document.querySelectorAll('.container > div').forEach(div => div.classList.add('hidden'));
-        document.getElementById(screen + '-screen').classList.remove('hidden');
-        window.scrollTo(0,0);
+        document.getElementById(s + '-screen').classList.remove('hidden');
     }
-
     function handleLogin() {
-        const pin = document.getElementById('pin').value;
-        if(pin === "1234") showScreen('staff');
-        else if(pin === "8888") showScreen('admin');
-        else alert("Wrong PIN. Try again!");
+        const p = document.getElementById('pin').value;
+        if(p === '8888') showScreen('admin');
+        else if(p === '1234') alert('Staff Task View Coming Soon');
+        else alert('Invalid PIN');
     }
-
-    document.getElementById('w-input').addEventListener('input', function(e) {
-        document.getElementById('price-total').innerText = e.target.value * 35;
-    });
 </script>
-
 </body>
 </html>
